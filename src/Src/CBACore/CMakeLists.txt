@@ -5,6 +5,7 @@ add_definitions(-DCBACore_LIB)
 include_directories(${INSTALL_INCLUDE_PATH})
 include_directories(${ROOT_SRC_DIR})
 link_directories(${INSTALL_LIB_PATH})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 

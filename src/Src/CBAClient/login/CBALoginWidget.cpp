@@ -3,7 +3,7 @@
 #include  "ui_CBALoginWidget.h"
 #include <QTextStream>
 #include <QSettings>
-#include "comm/CCommClient.h"
+#include "CBAClient/comm/CCommClient.h"
 #include <QMessageBox>
 
 #define SettingFile "CBAClient.ini"

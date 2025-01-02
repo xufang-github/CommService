@@ -2,7 +2,7 @@
 #include "CBAMainWidget.h"
 #include  "ui_CBAMainWidget.h"
 #include <QTextStream>
-#include <comm/CCommClient.h>
+#include "CBAClient/comm/CCommClient.h"
 
 CBAMainWidget::CBAMainWidget(QWidget *parent)
 	: QMainWindow(parent)

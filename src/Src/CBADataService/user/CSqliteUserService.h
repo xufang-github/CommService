@@ -1,7 +1,7 @@
 // sqlite用户服务类
 #ifndef CBADataService_CSQLITEUSERSERVICE_H
 #define CBADataService_CSQLITEUSERSERVICE_H
-#include "CBADataService_global.h"
+#include "CBADataService/CBADataService_global.h"
 #include "IUserService.h"
 
 namespace CBADataService

@@ -1,16 +1,17 @@
 set(OUT_NAME CBADataService)
 
-#MSVC导出宏定义
 add_definitions(-DCBADataService_LIB)
 
 include_directories(${INSTALL_INCLUDE_PATH})
 include_directories(${ROOT_SRC_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+
 link_directories(${INSTALL_LIB_PATH})
 
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
 file(GLOB_RECURSE SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
-
 
 file(GLOB_RECURSE UI_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.ui)
 
