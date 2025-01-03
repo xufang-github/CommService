@@ -43,7 +43,7 @@
   <customwidget>
    <class>CBALoginWidget</class>
    <extends>QWidget</extends>
-   <header>login/CBALoginWidget.h</header>
+   <header>CBAClient/login/CBALoginWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -34,7 +34,19 @@ add_executable(
         ${RC_FILES}
         ${QRC_FILES}
 )
-
+#如果是windows
+if(ANDROID)
+target_link_libraries(
+        ${OUT_NAME}
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::Gui
+        Qt5::Network
+        GLESv2
+        log
+        z
+)
+else()
 target_link_libraries(
         ${OUT_NAME}
         Qt5::Core
@@ -42,6 +54,5 @@ target_link_libraries(
         Qt5::Gui
         Qt5::Network
 )
-# 去除控制台窗口
-SET_PROPERTY(TARGET ${OUT_NAME} PROPERTY LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
-SET_PROPERTY(TARGET ${OUT_NAME} PROPERTY LINK_FLAGS_RELWITHDEBINFO "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+endif()
+

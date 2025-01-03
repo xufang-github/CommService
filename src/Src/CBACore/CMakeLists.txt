@@ -33,9 +33,19 @@ add_library(
         ${HEADER_FILES}
         ${SRC_FILES}
 )
-
+if(ANDROID)
 target_link_libraries(
         ${OUT_NAME}
         Qt5::Core
         Qt5::Sql
+        GLESv2
+        log
+        z
 )
+else()
+target_link_libraries(
+		${OUT_NAME}
+		Qt5::Core
+		Qt5::Sql
+)
+endif()

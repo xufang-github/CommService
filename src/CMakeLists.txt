@@ -15,6 +15,11 @@ set(INSTALL_INCLUDE_PATH ${CMAKE_INSTALL_PREFIX}/include)
 #src文件夹
 set(ROOT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Src)
 
+# 安卓设备
+if(ANDROID)
+set(CMAKE_PREFIX_PATH F:/Qt/Qt5.13.2/5.13.2/android_arm64_v8a/lib/cmake/Qt5)
+endif()
+
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
