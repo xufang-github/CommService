@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/global">
+        <file>.</file>
+        <file>chat.png</file>
+        <file>person_checked.png</file>
+        <file>chat_checked.png</file>
+        <file>person.png</file>
+    </qresource>
+</RCC>

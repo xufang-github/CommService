@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>814</width>
-    <height>473</height>
+    <width>824</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <widget class="CBALoginWidget" name="loginWidget"/>
-      <widget class="QWidget" name="mainWidget"/>
+      <widget class="CMainPageWidget" name="mainWidget"/>
      </widget>
     </item>
    </layout>
@@ -44,6 +44,12 @@
    <class>CBALoginWidget</class>
    <extends>QWidget</extends>
    <header>CBAClient/login/CBALoginWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CMainPageWidget</class>
+   <extends>QWidget</extends>
+   <header>CBAClient/main/CMainPageWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

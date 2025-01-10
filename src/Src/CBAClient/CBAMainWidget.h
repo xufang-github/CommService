@@ -7,7 +7,7 @@
 namespace Ui {
 	class CBAMainWidget;
 }
-
+// 声明CBAMainWidget类
 class  CBAMainWidget : public QMainWindow
 {
 	Q_OBJECT

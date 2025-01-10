@@ -17,6 +17,14 @@ set(ROOT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Src)
 
 # 安卓设备
 if(ANDROID)
+set(CMAKE_SYSTEM_NAME Android)
+set(CMAKE_SYSTEM_VERSION 21)  # 或其他你目标设备的 SDK 版本
+#set(CMAKE_ANDROID_ARCH_ABI arm64-v8a)  # 或其他架构
+#set(CMAKE_ANDROID_NDK "C:/Program Files/Java/android-sdk_r24.4.1-windows/android-sdk-windows")
+#set(CMAKE_ANDROID_SDK "F:/install/android-ndk-r21e-windows-x86_64/android-ndk-r21e")
+
+
+
 set(CMAKE_PREFIX_PATH F:/Qt/Qt5.13.2/5.13.2/android_arm64_v8a/lib/cmake/Qt5)
 endif()
 
