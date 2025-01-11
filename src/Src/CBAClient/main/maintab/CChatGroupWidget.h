@@ -1,8 +1,11 @@
 //utf-8 文件
-#ifndef CMAINPAGETABWIDGET_H
-#define CMAINPAGETABWIDGET_H
+#ifndef CCHATGROUPWIDGET_H
+#define CCHATGROUPWIDGET_H
 
 #include <QWidget>
+#include <QMap>
+
+class QPushButton;
 
 namespace Ui {
 	class CChatGroupWidget;
@@ -10,13 +13,25 @@ namespace Ui {
 
 class CChatGroupWidget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit CChatGroupWidget(QWidget *parent = 0);
-    ~CChatGroupWidget();
-    private:
-		Ui::CChatGroupWidget* ui;
+	explicit CChatGroupWidget(QWidget *parent = nullptr);
+	~CChatGroupWidget();
 
+signals:
+	void chatGroupSelected(const QString& topic);
+
+private slots:
+	void onGroupSelected();
+	void onMessageReceived(const QString& topic, const QString& message);
+
+private:
+	void initChatGroups();
+	void addChatGroup(const QString& name, const QString& topic);
+
+private:
+	Ui::CChatGroupWidget* ui;
+	QMap<QString, QPushButton*> m_chatGroups;  // topic -> button 映射
 };
 
-#endif // CMAINPAGETABWIDGET_H 
+#endif // CCHATGROUPWIDGET_H 

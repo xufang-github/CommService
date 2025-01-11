@@ -3,6 +3,7 @@
 #define CChatButton_H
 
 #include <QWidget>
+#include <QColor>
 
 namespace Ui {
 	class CChatButton;
@@ -23,9 +24,13 @@ public:
     void setCheckedStyle(const QString& imgPath, const QColor& color);
     // 设置未选中时的图片资源和颜色
     void setUnCheckedStyle(const QString& imgPath, const QColor& color);
-private:signals:
+
+signals:
     void clicked();
+
+protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
+
 private:
 	Ui::CChatButton* ui;
     bool m_checked;

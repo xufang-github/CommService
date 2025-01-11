@@ -34,7 +34,7 @@ add_executable(
         ${RC_FILES}
         ${QRC_FILES}
 )
-#Èç¹ûÊÇwindows
+#ï¿½ï¿½ï¿½ï¿½ï¿½windows
 if(ANDROID)
 target_link_libraries(
         ${OUT_NAME}

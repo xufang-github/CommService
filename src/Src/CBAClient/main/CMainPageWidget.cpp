@@ -1,11 +1,12 @@
 // utf8文件
-#include "CBAClient/main/CMainPageWidget.h"
+#include "CMainPageWidget.h"
 #include <QTextStream>
 #include <QSettings>
 #include <QMessageBox>
-#include  <QGridLayout>
-#include "CBAClient/main/maintab/CMainPageTabWidget.h"
-#include "CBAClient/main/maincontent/CMainPageContentWidget.h"
+#include <QGridLayout>
+#include <QResizeEvent>
+#include "maintab/CMainPageTabWidget.h"
+#include "maincontent/CMainPageContentWidget.h"
 
 #define SettingFile "CBAClient.ini"
 
@@ -22,6 +23,8 @@ CMainPageWidget::CMainPageWidget(QWidget *parent)
 	m_pMainLayout->setStretch(0, 1);
 	m_pMainLayout->setStretch(1, 2);
 	m_nCurrentIndex = 0;
+	
+	setupConnections();
 	adjustLayout();
 }
 
@@ -55,22 +58,50 @@ CMainPageWidget::ELayoutType CMainPageWidget::calLayoutType()
 	}
 }
 
-void CMainPageWidget::adjustLayout()
+void CMainPageWidget::setupConnections()
 {
-	// 如果布局未初始化，调整为手机布局
-	if (m_eLayoutType == ELayoutType::E_LAYOUT_NONE)
+	// 连接聊天组选择信号
+	m_pTabWidget->connectToChatContent(m_pContentWidget);
+	
+	// 连接页面切换信号
+	connect(m_pTabWidget, &CMainPageTabWidget::pageChanged,
+			this, &CMainPageWidget::onPageChanged);
+			
+	// 连接退出登录信号
+	connect(m_pContentWidget, &CMainPageContentWidget::logoutClicked,
+			this, &CMainPageWidget::logoutClicked);
+}
+
+void CMainPageWidget::onPageChanged(int index)
+{
+	m_nCurrentIndex = index;
+	
+	// 在手机布局下切换显示
+	if (m_eLayoutType == ELayoutType::E_LAYOUT_PHONE)
 	{
-		m_eLayoutType = ELayoutType::E_LAYOUT_PHONE;
-		if (m_nCurrentIndex == 0)
+		if (index == 0)
 		{
 			m_pTabWidget->show();
 			m_pContentWidget->hide();
 		}
 		else
 		{
-			m_pContentWidget->show();
 			m_pTabWidget->hide();
+			m_pContentWidget->show();
 		}
+	}
+	
+	// 更新内容页面
+	m_pContentWidget->onPageChanged(index);
+}
+
+void CMainPageWidget::adjustLayout()
+{
+	// 如果布局未初始化，调整为手机布局
+	if (m_eLayoutType == ELayoutType::E_LAYOUT_NONE)
+	{
+		m_eLayoutType = ELayoutType::E_LAYOUT_PHONE;
+		onPageChanged(m_nCurrentIndex);
 	}
 
 	ELayoutType eLayoutType = calLayoutType();	
@@ -79,18 +110,9 @@ void CMainPageWidget::adjustLayout()
 		m_eLayoutType = eLayoutType;
 		if (m_eLayoutType == ELayoutType::E_LAYOUT_PHONE)
 		{
-			if (m_nCurrentIndex == 0)
-			{
-				m_pTabWidget->show();
-				m_pContentWidget->hide();
-			}
-			else
-			{
-				m_pTabWidget->hide();
-				m_pContentWidget->show();
-			}
+			onPageChanged(m_nCurrentIndex);
 		}
-		else  if (m_eLayoutType == ELayoutType::E_LAYOUT_PAD)
+		else if (m_eLayoutType == ELayoutType::E_LAYOUT_PAD)
 		{
 			m_pTabWidget->show();
 			m_pContentWidget->show();

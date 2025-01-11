@@ -4,6 +4,11 @@
 
 #include <QMainWindow>
 
+// 前向声明
+class CBALoginWidget;
+class CMainPageWidget;
+class CSettingsWidget;
+
 namespace Ui {
 	class CBAMainWidget;
 }
@@ -16,6 +21,9 @@ public:
 	~CBAMainWidget();
 private slots:
 	void slotLogin(bool success);
+	void slotLogout();
+	void slotShowSettings();
+	void slotHideSettings();
 private:
 	Ui::CBAMainWidget *ui;
 };

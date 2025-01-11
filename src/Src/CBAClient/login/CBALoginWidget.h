@@ -8,15 +8,24 @@ namespace Ui {
 	class CBALoginWidget;
 }
 
-class  CBALoginWidget : public QMainWindow
+class CBALoginWidget : public QMainWindow
 {
 	Q_OBJECT
 public:
 	CBALoginWidget(QWidget *parent = 0);
 	~CBALoginWidget();
+	
+	void clearLoginInfo();
+
+signals:
+	void showSettings();
+
 private slots:
 	void slotLogin(bool success);
+	void onExitButtonClicked();
+
 private:
+	void setupConnections();
 	Ui::CBALoginWidget *ui;
 };
 

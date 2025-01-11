@@ -34,6 +34,7 @@ public:
     void sendMessage(const QString& topic,const QString& message);
     // 订阅
     void subscribe(const QString& topic);
+    const SUser& currentUser() const { return m_user; }
 public:signals:
     void disconnected();
     // 收到登录消息

@@ -3,18 +3,15 @@
 #define _CMainPageWidget_H_
 
 #include <QWidget>
-#include  <QHBoxLayout>
+#include <QHBoxLayout>
 
-class  CMainPageTabWidget;
+class CMainPageTabWidget;
 class CMainPageContentWidget;
-//登录之后的主界面
-// 主要显示一些信息，包括：
 
-class  CMainPageWidget : public QWidget
+class CMainPageWidget : public QWidget
 {
 	Q_OBJECT
 public:
-
 	enum ELayoutType			
 	{
 		// 未初始化
@@ -26,12 +23,22 @@ public:
 	};
 	CMainPageWidget(QWidget *parent = 0);
 	~CMainPageWidget();
+
+signals:
+	void logoutClicked();
+
+private slots:
+	void onPageChanged(int index);
+
 protected:
 	void resizeEvent(QResizeEvent* e) override;
 	void showEvent(QShowEvent* e) override;
+
 private:
 	void adjustLayout();
 	ELayoutType calLayoutType();
+	void setupConnections();
+
 private:
 	QHBoxLayout* m_pMainLayout;
 	CMainPageTabWidget* m_pTabWidget;
