@@ -28,6 +28,7 @@ void CChatGroupWidget::initChatGroups()
 {
     // 添加默认聊天组
     addChatGroup("公共聊天室", "public");
+    addChatGroup("币安新闻", "binance_news");
     addChatGroup("技术交流", "tech");
     addChatGroup("休闲娱乐", "entertainment");
 }

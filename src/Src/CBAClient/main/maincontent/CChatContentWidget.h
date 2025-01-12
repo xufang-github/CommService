@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QLineEdit>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 class CChatContentWidget : public QWidget
 {
@@ -20,6 +22,7 @@ private slots:
 private:
     void setupUI();
     void appendMessage(const QString& message);
+    void setupTextBrowser();
 
 private:
     QTextEdit* m_chatDisplay;
