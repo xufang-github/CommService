@@ -6,6 +6,9 @@
 #include <QDateTime>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
+#include <QStandardPaths>
+#include <QDir>
 
 CChatContentWidget::CChatContentWidget(QWidget *parent)
     : QWidget(parent)
@@ -44,6 +47,85 @@ void CChatContentWidget::setTopic(const QString& topic)
 {
     m_currentTopic = topic;
     m_chatDisplay->clear();
+    loadHistoryMessages();
+}
+
+QString CChatContentWidget::getHistoryFilePath() const
+{
+    // 获取应用数据目录
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir dir(dataPath + "/history");
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+    
+    // 返回当前主题的历史记录文件路径
+    return dir.filePath(m_currentTopic + ".json");
+}
+
+void CChatContentWidget::saveMessageToFile(const QString& timeStr, const QString& message)
+{
+    QFile file(getHistoryFilePath());
+    QJsonArray messages;
+    
+    // 读取现有消息
+    if (file.exists() && file.open(QIODevice::ReadOnly)) {
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        if (doc.isArray()) {
+            messages = doc.array();
+        }
+        file.close();
+    }
+    
+    // 添加新消息
+    QJsonObject newMessage;
+    newMessage["time"] = timeStr;
+    newMessage["content"] = message;
+    messages.append(newMessage);
+    
+    // 限制消息数量
+    while (messages.size() > MAX_HISTORY_MESSAGES) {
+        messages.removeAt(0);
+    }
+    
+    // 保存到文件
+    if (file.open(QIODevice::WriteOnly)) {
+        QJsonDocument doc(messages);
+        file.write(doc.toJson());
+        file.close();
+    }
+}
+
+void CChatContentWidget::loadHistoryMessages()
+{
+    QFile file(getHistoryFilePath());
+    if (!file.exists() || !file.open(QIODevice::ReadOnly)) {
+        return;
+    }
+    
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    file.close();
+    
+    if (!doc.isArray()) {
+        return;
+    }
+    
+    QJsonArray messages = doc.array();
+    for (const QJsonValue& value : messages) {
+        QJsonObject msgObj = value.toObject();
+        QString timeStr = msgObj["time"].toString();
+        QString content = msgObj["content"].toString();
+        
+        if (m_currentTopic == "binance_news") {
+            // 对于币安新闻，重新解析并显示
+            appendMessage(content);
+        } else {
+            m_chatDisplay->append(QString("[%1] %2").arg(timeStr).arg(content));
+        }
+    }
+    
+    // 添加分隔线
+    m_chatDisplay->append("----------------------------------------");
 }
 
 void CChatContentWidget::onSendMessage()
@@ -95,4 +177,7 @@ void CChatContentWidget::appendMessage(const QString& message)
         // 普通消息直接显示
         m_chatDisplay->append(QString("[%1] %2").arg(timeStr).arg(message));
     }
+    
+    // 保存消息到文件
+    saveMessageToFile(timeStr, message);
 } 
